@@ -1,8 +1,9 @@
 import os
 import argparse
-from os.path import exists
+
 
 class MVCProjectGenerator:
+
     def __init__(self, project_name) -> None:
         self.project_name = project_name
         self.base_path = os.path.join(os.getcwd(), self.project_name)
@@ -28,7 +29,7 @@ class MVCProjectGenerator:
             'main.py': [],
             'config.py': []
         }
-        
+
         # Template content using project name
         template_content = {
             'main.py': f"""
@@ -85,37 +86,48 @@ class BaseController:
 </head>
 <body>
     <h1>Welcome to {self.project_name}!</h1>
-    <!-- This is the base HTML template. Use it to create the structure for your web pages. -->
+    <!-- This is the base HTML template. Use it to create the structure
+    for your web pages. -->
     <!-- You can include headers, footers, and other common elements here. -->
 </body>
 </html>
             """
         }
-        
+
         for file_name, dirs in files.items():
             if dirs:
                 for directory in dirs:
-                    file_path = os.path.join(self.base_path, directory, file_name)
+                    file_path = os.path.join(
+                        self.base_path, directory, file_name
+                    )
                     with open(file_path, 'w') as f:
-                        content = template_content.get(file_name, f"# {file_name.split('.')[0].capitalize()} file\n")
+                        content = template_content.get(
+                            file_name,
+                            f"# {file_name.split('.')[0].capitalize()} file\n"
+                        )
                         f.write(content)
                     print(f"Created file: {file_path}")
-                    
+
     def generate_project(self):
         os.makedirs(self.base_path, exist_ok=True)
         print(f"Created base project directory: {self.base_path}")
         self.create_directories()
         self.create_files()
-        
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Generate a basic MVC project structure.")
-    parser.add_argument("project_name", help="The name of the project to create.")
+    parser = argparse.ArgumentParser(
+        description="Generate a basic MVC project structure."
+    )
+    parser.add_argument(
+        "project_name", help="The name of the project to create."
+        )
     args = parser.parse_args()
 
     project_name = args.project_name
     generator = MVCProjectGenerator(project_name)
     generator.generate_project()
 
+
 if __name__ == "__main__":
     main()
-
