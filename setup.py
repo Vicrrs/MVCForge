@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'mvc-generate=MVCForge.generator:main'
+            'mvcforge=mvcforge.generator:main'
         ]
     },
     description='A simple MVC project structure generator',
